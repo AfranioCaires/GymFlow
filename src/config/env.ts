@@ -8,8 +8,8 @@ export const envSchema = z.object({
 const parsed = envSchema.safeParse(process.env)
 
 if (!parsed.success) {
-  console.error('Invalid environment variables', parsed.error.flatten())
-  process.exit(1)
+  console.error('Invalid environment variables', z.treeifyError(parsed.error))
+  throw new Error('Invalid environment variables')
 }
 
 export const env = parsed.data
