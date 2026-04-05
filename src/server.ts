@@ -1,8 +1,10 @@
 import { fastify } from 'fastify'
 
-import { env } from './config/env'
+import { env } from '@/config/env'
 
-const app = fastify({
+import { registerPrismaLogs } from './infra/database/prisma'
+
+export const app = fastify({
   logger: {
     transport: {
       target: 'pino-pretty',
@@ -13,6 +15,8 @@ const app = fastify({
     },
   },
 })
+
+registerPrismaLogs(app.log)
 
 app.listen({
   port: env.PORT,

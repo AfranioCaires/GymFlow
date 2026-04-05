@@ -1,8 +1,9 @@
 import { z } from 'zod'
 
-export const envSchema = z.object({
+const envSchema = z.object({
   PORT: z.coerce.number().default(3000),
   HOST: z.string().default('0.0.0.0'),
+  DATABASE_URL: z.url(),
 })
 
 const parsed = envSchema.safeParse(process.env)
