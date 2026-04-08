@@ -1,5 +1,6 @@
 import { PrismaPg } from '@prisma/adapter-pg'
 
+import { env } from '@/config/env'
 import { PrismaClient } from '@/generated/prisma/client'
 
 function createPrismaClient() {
@@ -9,12 +10,15 @@ function createPrismaClient() {
 
   return new PrismaClient({
     adapter,
-    log: [
-      { emit: 'event', level: 'query' },
-      { emit: 'event', level: 'error' },
-      { emit: 'event', level: 'warn' },
-      { emit: 'event', level: 'info' },
-    ],
+    log:
+      env.NODE_ENV === 'development'
+        ? [
+            { emit: 'event', level: 'query' },
+            { emit: 'event', level: 'error' },
+            { emit: 'event', level: 'warn' },
+            { emit: 'event', level: 'info' },
+          ]
+        : [],
   })
 }
 
