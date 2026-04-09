@@ -15,7 +15,7 @@
     "db:studio": "bun --bun prisma studio",
     "test:run": "vitest run",
     "test:watch": "vitest watch",
-    "test:ui": "bun --bun vitest --ui",
+    "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
