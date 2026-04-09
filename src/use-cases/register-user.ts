@@ -11,10 +11,14 @@ type RegisterUserUseCaseRequest = {
   password: string
 }
 
+type RegisterUserUseCaseResponse = {
+  user: User
+}
+
 export class RegisterUserUseCase {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async execute(data: RegisterUserUseCaseRequest): Promise<{ user: User }> {
+  async execute(data: RegisterUserUseCaseRequest): Promise<RegisterUserUseCaseResponse> {
     const { name, email, password } = data
     const password_hash = await bcrypt.hash(password, 6)
     const existingUser = await this.usersRepository.findByEmail(email)
