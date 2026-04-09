@@ -9,11 +9,11 @@ import { RegisterUserUseCase } from './register-user'
 
 describe('Register User use case', () => {
   let usersRepository: UsersRepository
-  let registerUserUseCase: RegisterUserUseCase
+  let sut: RegisterUserUseCase
 
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository()
-    registerUserUseCase = new RegisterUserUseCase(usersRepository)
+    sut = new RegisterUserUseCase(usersRepository)
   })
 
   it('should be able to register a new user', async () => {
@@ -23,7 +23,7 @@ describe('Register User use case', () => {
       password: '123456',
     }
 
-    const { user } = await registerUserUseCase.execute(userData)
+    const { user } = await sut.execute(userData)
 
     expect(user.id).toEqual(expect.any(String))
   })
@@ -35,11 +35,9 @@ describe('Register User use case', () => {
       password: '123456',
     }
 
-    await registerUserUseCase.execute(userData)
+    await sut.execute(userData)
 
-    await expect(registerUserUseCase.execute(userData)).rejects.toBeInstanceOf(
-      UserAlreadyExistsError,
-    )
+    await expect(sut.execute(userData)).rejects.toBeInstanceOf(UserAlreadyExistsError)
   })
 
   it('should hash the user password upon registration', async () => {
@@ -49,7 +47,7 @@ describe('Register User use case', () => {
       password: '123456',
     }
 
-    const { user } = await registerUserUseCase.execute(userData)
+    const { user } = await sut.execute(userData)
 
     const isPasswordCorrectlyHashed = await bcrypt.compare(userData.password, user.password_hash)
 
