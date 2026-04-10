@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt'
 import { expect, it, describe, beforeEach } from 'vitest'
 
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory.repository'
-import type { UsersRepository } from '@/repositories/users.repository'
+import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-repository'
+import type { UsersRepository } from '@/repositories/users-repository'
 
 import { AuthenticateUserUseCase } from './authenticate'
-import { InvalidCredentialsError } from './errors/invalid-credentials.error'
+import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 
 let usersRepository: UsersRepository
 let sut: AuthenticateUserUseCase

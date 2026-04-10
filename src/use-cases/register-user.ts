@@ -1,9 +1,10 @@
 import bcrypt from 'bcrypt'
 
+import { BaseUseCase } from '@/domain/use-cases/base-use-case'
 import { type User } from '@/generated/prisma/client'
-import type { UsersRepository } from '@/repositories/users.repository'
+import type { UsersRepository } from '@/repositories/users-repository'
 
-import { UserAlreadyExistsError } from './errors/user-already-exists.error'
+import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 
 type RegisterUserDto = {
   name: string
@@ -15,8 +16,10 @@ type RegisterUserUseCaseResponse = {
   user: User
 }
 
-export class RegisterUserUseCase {
-  constructor(private readonly usersRepository: UsersRepository) {}
+export class RegisterUserUseCase extends BaseUseCase<RegisterUserDto, RegisterUserUseCaseResponse> {
+  constructor(private readonly usersRepository: UsersRepository) {
+    super()
+  }
 
   async execute(data: RegisterUserDto): Promise<RegisterUserUseCaseResponse> {
     const { name, email, password } = data

@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt'
 import { expect, it, describe, beforeEach } from 'vitest'
 
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory.repository'
-import type { UsersRepository } from '@/repositories/users.repository'
+import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-repository'
+import type { UsersRepository } from '@/repositories/users-repository'
 
-import { UserAlreadyExistsError } from './errors/user-already-exists.error'
+import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 import { RegisterUserUseCase } from './register-user'
 
 let usersRepository: UsersRepository
