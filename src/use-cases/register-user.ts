@@ -5,7 +5,7 @@ import type { UsersRepository } from '@/repositories/users.repository'
 
 import { UserAlreadyExistsError } from './errors/user-already-exists.error'
 
-type RegisterUserUseCaseRequest = {
+type RegisterUserDto = {
   name: string
   email: string
   password: string
@@ -18,7 +18,7 @@ type RegisterUserUseCaseResponse = {
 export class RegisterUserUseCase {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async execute(data: RegisterUserUseCaseRequest): Promise<RegisterUserUseCaseResponse> {
+  async execute(data: RegisterUserDto): Promise<RegisterUserUseCaseResponse> {
     const { name, email, password } = data
     const password_hash = await bcrypt.hash(password, 6)
     const existingUser = await this.usersRepository.findByEmail(email)
