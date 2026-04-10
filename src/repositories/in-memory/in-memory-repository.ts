@@ -1,7 +1,7 @@
 import type { User } from '@/generated/prisma/client'
 import type { UserCreateInput } from '@/generated/prisma/models'
 
-import type { UsersRepository } from '../users.repository'
+import type { UsersRepository } from '../users-repository'
 
 export class InMemoryUsersRepository implements UsersRepository {
   private users: User[] = []
@@ -23,6 +23,11 @@ export class InMemoryUsersRepository implements UsersRepository {
 
   async findByEmail(email: string): Promise<User | null> {
     const user = this.users.find((user) => user.email === email)
+    return user || null
+  }
+
+  async findById(id: string): Promise<User | null> {
+    const user = this.users.find((user) => user.id === id)
     return user || null
   }
 }

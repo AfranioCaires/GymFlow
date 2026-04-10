@@ -1,7 +1,7 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists.error'
+import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
 import { RegisterUserUseCaseFactory } from '@/use-cases/factories/make-register-user-use-case'
 import { catchError } from '@/util/error-catcher'
 
