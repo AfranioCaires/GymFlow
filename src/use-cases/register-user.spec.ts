@@ -7,10 +7,10 @@ import type { UsersRepository } from '@/repositories/users.repository'
 import { UserAlreadyExistsError } from './errors/user-already-exists.error'
 import { RegisterUserUseCase } from './register-user'
 
-describe('Register User use case', () => {
-  let usersRepository: UsersRepository
-  let sut: RegisterUserUseCase
+let usersRepository: UsersRepository
+let sut: RegisterUserUseCase
 
+describe('Register User use case', () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository()
     sut = new RegisterUserUseCase(usersRepository)

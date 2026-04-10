@@ -7,10 +7,10 @@ import type { UsersRepository } from '@/repositories/users.repository'
 import { AuthenticateUserUseCase } from './authenticate'
 import { InvalidCredentialsError } from './errors/invalid-credentials.error'
 
-describe('Authenticate User use case', () => {
-  let usersRepository: UsersRepository
-  let sut: AuthenticateUserUseCase
+let usersRepository: UsersRepository
+let sut: AuthenticateUserUseCase
 
+describe('Authenticate User use case', () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository()
     sut = new AuthenticateUserUseCase(usersRepository)

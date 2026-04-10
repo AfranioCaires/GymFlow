@@ -5,7 +5,7 @@ import type { UsersRepository } from '@/repositories/users.repository'
 
 import { InvalidCredentialsError } from './errors/invalid-credentials.error'
 
-type AuthenticateUserUseCaseRequest = {
+type AuthenticateUserDto = {
   email: string
   password: string
 }
@@ -17,7 +17,7 @@ type AuthenticateUserUseCaseResponse = {
 export class AuthenticateUserUseCase {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async execute(data: AuthenticateUserUseCaseRequest): Promise<AuthenticateUserUseCaseResponse> {
+  async execute(data: AuthenticateUserDto): Promise<AuthenticateUserUseCaseResponse> {
     const { email, password } = data
 
     const user = await this.usersRepository.findByEmail(email)
