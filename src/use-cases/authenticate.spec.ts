@@ -18,12 +18,13 @@ describe('Authenticate User use case', () => {
 
   it('should be able to authenticate a user with correct credentials', async () => {
     const userData = {
+      name: 'Arthur Morgan',
       email: 'arthur_morgan@exemplo.com',
       password: '123456',
     }
 
     await usersRepository.create({
-      name: 'Arthur Morgan',
+      name: userData.name,
       email: userData.email,
       password_hash: await bcrypt.hash(userData.password, 6),
     })
