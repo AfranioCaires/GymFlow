@@ -1,10 +1,24 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "unicorn", "oxc"],
+  "plugins": ["typescript", "unicorn", "oxc", "jest"],
   "categories": {
     "correctness": "error"
   },
-  "rules": {},
+  "rules": {
+    "unicorn/no-nested-ternary": "error",
+    "eqeqeq": ["error", "always"],
+    "unicorn/throw-new-error": "error",
+    "unicorn/prefer-ternary": ["warn", "only-single-line"],
+    "no-else-return": ["error", { "allowElseIf": false }],
+    "func-style": ["error", "declaration"],
+    "vitest/consistent-test-it": ["error", { "fn": "it" }],
+    "unicorn/filename-case": [
+      "error",
+      {
+        "case": "kebabCase"
+      }
+    ]
+  },
   "env": {
     "builtin": true
   },
