@@ -18,6 +18,13 @@ export class CheckInUseCase extends BaseUseCase<CheckInUseCaseDto, CheckInUseCas
 
   override async execute(data: CheckInUseCaseDto): Promise<CheckInUseCaseResponse> {
     const { userId, gymId } = data
+
+    const checkInOnSameDay = await this.checkInsRepository.findByUserIdOnDate(userId, new Date())
+
+    if (checkInOnSameDay) {
+      throw new Error()
+    }
+
     const checkIn = await this.checkInsRepository.create({ user_id: userId, gym_id: gymId })
     return { checkIn }
   }
