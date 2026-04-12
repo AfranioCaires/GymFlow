@@ -1,5 +1,6 @@
 import type { CheckIn } from '@/generated/prisma/browser'
 import type { CheckInUncheckedCreateInput } from '@/generated/prisma/models'
+import { DateUtils } from '@/util/date-utils'
 
 import type { CheckInsRepository } from '../check-ins-repository'
 
@@ -22,17 +23,18 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
   }
 
   async findByUserIdOnDate(userId: string, date: Date): Promise<CheckIn | null> {
-    const startOfTheDay = new Date(date)
-    startOfTheDay.setHours(0, 0, 0, 0)
-
-    const endOfTheDay = new Date(date)
-    endOfTheDay.setHours(23, 59, 59, 999)
+    const startOfTheDay = DateUtils.startOfTheDay(date)
+    const endOfTheDay = DateUtils.endOfTheDay(date)
 
     const checkInOnSameDate = this.checkIns.find((checkIn) => {
       return (
         checkIn.user_id === userId &&
-        checkIn.created_at >= startOfTheDay &&
-        checkIn.created_at <= endOfTheDay
+        DateUtils.isBetween({
+          date: checkIn.created_at,
+          startDate: startOfTheDay,
+          endDate: endOfTheDay,
+          inclusive: true,
+        })
       )
     })
 
