@@ -20,7 +20,9 @@ export class GetUserProfileUseCase extends BaseUseCase<
     super()
   }
 
-  async execute({ userId }: GetUserProfileUseCaseDto): Promise<GetUserProfileUseCaseResponse> {
+  override async execute({
+    userId,
+  }: GetUserProfileUseCaseDto): Promise<GetUserProfileUseCaseResponse> {
     const user = await this.usersRepository.findById(userId)
 
     if (!user) {

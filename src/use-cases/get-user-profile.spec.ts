@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-repository'
+import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import type { UsersRepository } from '@/repositories/users-repository'
 
 import { ResourceNotFoundError } from './errors/resource-not-found-error'

@@ -23,7 +23,7 @@ export class AuthenticateUserUseCase extends BaseUseCase<
     super()
   }
 
-  async execute(data: AuthenticateUserDto): Promise<AuthenticateUserUseCaseResponse> {
+  override async execute(data: AuthenticateUserDto): Promise<AuthenticateUserUseCaseResponse> {
     const { email, password } = data
 
     const user = await this.usersRepository.findByEmail(email)

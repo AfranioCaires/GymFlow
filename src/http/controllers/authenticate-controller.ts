@@ -20,7 +20,7 @@ export async function authenticateController(request: FastifyRequest, reply: Fas
   ])
 
   if (error) {
-    return reply.status(400).send({ message: error.message })
+    return reply.status(400).send({ message: error.message,  })
   }
 
   return reply.status(200).send(user)

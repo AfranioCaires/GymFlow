@@ -21,7 +21,7 @@ export class RegisterUserUseCase extends BaseUseCase<RegisterUserDto, RegisterUs
     super()
   }
 
-  async execute(data: RegisterUserDto): Promise<RegisterUserUseCaseResponse> {
+  override async execute(data: RegisterUserDto): Promise<RegisterUserUseCaseResponse> {
     const { name, email, password } = data
     const password_hash = await bcrypt.hash(password, 6)
     const existingUser = await this.usersRepository.findByEmail(email)

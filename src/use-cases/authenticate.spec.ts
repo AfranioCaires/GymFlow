@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { expect, it, describe, beforeEach } from 'vitest'
 
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-repository'
+import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import type { UsersRepository } from '@/repositories/users-repository'
 
 import { AuthenticateUserUseCase } from './authenticate'
