@@ -1,3 +1,3 @@
-export abstract class BaseUseCase<Request, Response> {
-  abstract execute(data: Request): Promise<Response>
+export abstract class BaseUseCase<Input, Output> {
+  abstract execute(data: Input): Promise<Output>
 }
