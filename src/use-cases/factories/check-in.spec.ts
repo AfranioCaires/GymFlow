@@ -5,7 +5,8 @@ import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-c
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms.repository'
 
 import { CheckInUseCase } from '../check-in'
-import { DistanceNotAllowedError } from '../errors/distance-not-allowed'
+import { MaxDistanceError } from '../errors/max-distance-error'
+import { MaxNumberOfCheckInsError } from '../errors/max-number-of-check-ins'
 
 let checkInRepository: CheckInsRepository
 let gymsRepository: InMemoryGymsRepository
@@ -62,7 +63,7 @@ describe('Check in Use Case', () => {
 
     await sut.execute(checkInData)
 
-    await expect(() => sut.execute(checkInData)).rejects.toBeInstanceOf(Error)
+    await expect(() => sut.execute(checkInData)).rejects.toBeInstanceOf(MaxNumberOfCheckInsError)
   })
 
   it('should be abre to check in diffent days', async () => {
@@ -96,6 +97,6 @@ describe('Check in Use Case', () => {
       userLongitude: 46.6396,
     }
 
-    await expect(() => sut.execute(checkInData)).rejects.toBeInstanceOf(DistanceNotAllowedError)
+    await expect(() => sut.execute(checkInData)).rejects.toBeInstanceOf(MaxDistanceError)
   })
 })
