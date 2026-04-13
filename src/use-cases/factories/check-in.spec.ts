@@ -5,6 +5,7 @@ import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-c
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms.repository'
 
 import { CheckInUseCase } from '../check-in'
+import { DistanceNotAllowedError } from '../errors/distance-not-allowed'
 
 let checkInRepository: CheckInsRepository
 let gymsRepository: InMemoryGymsRepository
@@ -83,5 +84,18 @@ describe('Check in Use Case', () => {
     const { checkIn } = await sut.execute(checkInData)
 
     expect(checkIn.id).toEqual(expect.any(String))
+  })
+
+  it('should not be able to check in on distant gym', async () => {
+    const { id } = await gymsRepository.create(gymData)
+
+    const checkInData = {
+      userId: crypto.randomUUID(),
+      gymId: id,
+      userLatitude: 23.5558,
+      userLongitude: 46.6396,
+    }
+
+    await expect(() => sut.execute(checkInData)).rejects.toBeInstanceOf(DistanceNotAllowedError)
   })
 })
