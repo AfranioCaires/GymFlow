@@ -4,6 +4,7 @@ import type { CheckInsRepository } from '@/repositories/check-ins-repository'
 import type { GymsRepository } from '@/repositories/gyms-repository'
 import { getDistanceBetweenCoordinates } from '@/util/calculate-distance'
 
+import { CheckInTwiceOnTheSameDayError } from './errors/check-twice-on-the-same-day'
 import { DistanceNotAllowedError } from './errors/distance-not-allowed'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
@@ -49,7 +50,7 @@ export class CheckInUseCase extends BaseUseCase<CheckInUseCaseDto, CheckInUseCas
     const checkInOnSameDay = await this.checkInsRepository.findByUserIdOnDate(userId, new Date())
 
     if (checkInOnSameDay) {
-      throw new Error()
+      throw new CheckInTwiceOnTheSameDayError()
     }
 
     const checkIn = await this.checkInsRepository.create({ user_id: userId, gym_id: gymId })
