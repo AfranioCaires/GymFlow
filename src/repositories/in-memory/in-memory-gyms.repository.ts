@@ -8,7 +8,7 @@ export class InMemoryGymsRepository implements GymsRepository {
 
   async create(data: GymCreateInput): Promise<Gym> {
     const gym = {
-      id: crypto.randomUUID(),
+      id: data.id ?? crypto.randomUUID(),
       title: data.title,
       description: data.description || null,
       phone: data.phone || null,

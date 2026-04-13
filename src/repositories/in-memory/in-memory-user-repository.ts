@@ -8,7 +8,7 @@ export class InMemoryUsersRepository implements UsersRepository {
 
   async create(data: UserCreateInput): Promise<User> {
     const user = {
-      id: crypto.randomUUID(),
+      id: data.id ?? crypto.randomUUID(),
       name: data.name,
       email: data.email,
       password_hash: data.password_hash,
