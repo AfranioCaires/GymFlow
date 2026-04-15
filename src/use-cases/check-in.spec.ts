@@ -4,9 +4,9 @@ import type { CheckInsRepository } from '@/repositories/check-ins-repository'
 import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms.repository'
 
-import { CheckInUseCase } from '../check-in'
-import { MaxDistanceError } from '../errors/max-distance-error'
-import { MaxNumberOfCheckInsError } from '../errors/max-number-of-check-ins'
+import { CheckInUseCase } from './check-in'
+import { MaxDistanceError } from './errors/max-distance-error'
+import { MaxNumberOfCheckInsError } from './errors/max-number-of-check-ins'
 
 let checkInRepository: CheckInsRepository
 let gymsRepository: InMemoryGymsRepository
