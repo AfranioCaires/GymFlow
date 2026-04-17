@@ -26,7 +26,7 @@ describe('Authenticate User use case', () => {
     await usersRepository.create({
       name: userData.name,
       email: userData.email,
-      password_hash: await bcrypt.hash(userData.password, 6),
+      password_hash: await bcrypt.hash(userData.password, 3),
     })
 
     const { user } = await sut.execute(userData)

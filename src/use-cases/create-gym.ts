@@ -15,12 +15,12 @@ type CreateGymCaseResponse = {
 }
 
 export class CreateGymUseCase extends BaseUseCase<CreateGymDto, CreateGymCaseResponse> {
-  constructor(private readonly gynmsRepository: PrismaGymsRepository) {
+  constructor(private readonly gymsRepository: PrismaGymsRepository) {
     super()
   }
 
   override async execute(data: CreateGymDto): Promise<CreateGymCaseResponse> {
-    const gym = await this.gynmsRepository.create(data)
+    const gym = await this.gymsRepository.create(data)
 
     return { gym }
   }
