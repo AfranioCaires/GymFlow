@@ -57,4 +57,8 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
       .filter((checkIn) => checkIn.user_id === data.userId)
       .slice(startIndex, endIndex)
   }
+
+  async countByUserId(userId: string): Promise<number> {
+    return this.checkIns.filter((checkIn) => checkIn.user_id === userId).length
+  }
 }
