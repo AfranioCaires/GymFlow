@@ -1,3 +1,4 @@
+import { PAGINATION_DEFAULT_PAGE_SIZE } from '@/config/pagination'
 import type { CheckIn } from '@/generated/prisma/browser'
 import type { CheckInUncheckedCreateInput } from '@/generated/prisma/models'
 import { DateUtils } from '@/util/date-utils'
@@ -39,5 +40,21 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
     })
 
     return checkInOnSameDate || null
+  }
+
+  async findManyByUserId(data: {
+    userId: string
+    page?: number
+    limit?: number
+  }): Promise<CheckIn[]> {
+    const currentPage = data.page ?? 1
+    const itemsPerPage = data.limit ?? PAGINATION_DEFAULT_PAGE_SIZE
+
+    const startIndex = (currentPage - 1) * itemsPerPage
+    const endIndex = startIndex + itemsPerPage
+
+    return this.checkIns
+      .filter((checkIn) => checkIn.user_id === data.userId)
+      .slice(startIndex, endIndex)
   }
 }

@@ -1,6 +1,6 @@
 import type { CheckInsRepository } from '@/repositories/check-ins-repository'
 import type { GymsRepository } from '@/repositories/gyms-repository'
-import { PrismaCheckInsRepository } from '@/repositories/prisma/prisma-check-ins-repositpry'
+import { PrismaCheckInsRepository } from '@/repositories/prisma/prisma-check-ins-repository'
 import { PrismaGymsRepository } from '@/repositories/prisma/prisma-gyms-repository'
 
 import { CheckInUseCase } from '../check-in'
