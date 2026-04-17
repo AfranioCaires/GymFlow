@@ -30,7 +30,7 @@ export class CheckInUseCase extends BaseUseCase<CheckInUseCaseDto, CheckInUseCas
   override async execute(data: CheckInUseCaseDto): Promise<CheckInUseCaseResponse> {
     const { userId, gymId, userLatitude, userLongitude } = data
 
-    const gym = await this.gymsRepository.FindById(gymId)
+    const gym = await this.gymsRepository.findById(gymId)
 
     if (!gym) {
       throw new ResourceNotFoundError('Gym')
