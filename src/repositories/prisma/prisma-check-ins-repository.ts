@@ -42,4 +42,10 @@ export class PrismaCheckInsRepository implements CheckInsRepository {
       skip: (currentPage - 1) * itemsPerPage,
     })
   }
+
+  async countByUserId(userId: string): Promise<number> {
+    return prisma.checkIn.count({
+      where: { user_id: userId },
+    })
+  }
 }
