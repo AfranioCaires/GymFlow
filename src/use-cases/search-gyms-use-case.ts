@@ -8,16 +8,16 @@ type SearchGymsDto = {
   pagination?: Pagination
 }
 
-type CreateGymCaseResponse = {
+type SearchGymsReponse = {
   gyms: Gym[]
 }
 
-export class SearchGymsUseCase extends BaseUseCase<SearchGymsDto, CreateGymCaseResponse> {
+export class SearchGymsUseCase extends BaseUseCase<SearchGymsDto, SearchGymsReponse> {
   constructor(private readonly gymsRepository: GymsRepository) {
     super()
   }
 
-  override async execute(data: SearchGymsDto): Promise<CreateGymCaseResponse> {
+  override async execute(data: SearchGymsDto): Promise<SearchGymsReponse> {
     const { query, pagination } = data
 
     const gyms = await this.gymsRepository.findManyByTitle({ query, ...pagination })
