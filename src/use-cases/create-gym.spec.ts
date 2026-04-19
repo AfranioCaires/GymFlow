@@ -27,7 +27,4 @@ describe('Create gym use case', () => {
 
     expect(gym.id).toEqual(expect.any(String))
   })
-
-  //   it('should not be able to create a new gym with invalid ', async () => {
-  //   })
 })
