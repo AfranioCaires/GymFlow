@@ -11,6 +11,17 @@ export class PrismaCheckInsRepository implements CheckInsRepository {
     return await prisma.checkIn.create({ data })
   }
 
+  async findById(id: string): Promise<CheckIn | null> {
+    return prisma.checkIn.findFirst({ where: { id } })
+  }
+
+  async save(checkIn: CheckIn): Promise<CheckIn> {
+    return await prisma.checkIn.update({
+      data: { validated_at: checkIn.validated_at },
+      where: { id: checkIn.id },
+    })
+  }
+
   async findByUserIdOnDate(userId: string, date: Date): Promise<CheckIn | null> {
     const startOfTheDay = DateUtils.startOfTheDay(date)
     const endOfTheDay = DateUtils.endOfTheDay(date)
