@@ -57,4 +57,20 @@ describe('SearchNearbyGymsUseCase gyms use case', () => {
       expect.objectContaining({ id: 'g22' }),
     ])
   })
+
+  it('should not fetch gyms far away', async () => {
+    await gymsRepository.create({
+      id: 'g1',
+      title: 'gym_far',
+      latitude: -23.9505,
+      longitude: -46.6333,
+    })
+
+    const { gyms } = await sut.execute({
+      userLatitude: -23.5505,
+      userLongitude: -46.6333,
+    })
+
+    expect(gyms).toHaveLength(0)
+  })
 })
