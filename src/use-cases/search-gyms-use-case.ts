@@ -12,13 +12,15 @@ type CreateGymCaseResponse = {
   gyms: Gym[]
 }
 
-export class CreateGymUseCase extends BaseUseCase<SearchGymsDto, CreateGymCaseResponse> {
+export class SearchGymsUseCase extends BaseUseCase<SearchGymsDto, CreateGymCaseResponse> {
   constructor(private readonly gymsRepository: GymsRepository) {
     super()
   }
 
   override async execute(data: SearchGymsDto): Promise<CreateGymCaseResponse> {
-    const gyms = await this.gymsRepository.findManyByTitle(data)
+    const { query, pagination } = data
+
+    const gyms = await this.gymsRepository.findManyByTitle({ query, ...pagination })
 
     return { gyms }
   }
