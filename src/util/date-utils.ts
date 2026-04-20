@@ -24,4 +24,8 @@ export const DateUtils = {
 
     return date > startDate && date < endDate
   },
+
+  diff(dateA: Date, dateB: Date) {
+    return dateA.valueOf() - dateB.valueOf()
+  },
 }
