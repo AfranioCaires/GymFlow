@@ -8,7 +8,7 @@ import type { CheckInsRepository } from '../check-ins-repository'
 export class InMemoryCheckInsRepository implements CheckInsRepository {
   readonly checkIns: CheckIn[] = []
 
-  async create(data: CheckInUncheckedCreateInput): Promise<CheckIn> {
+  async create(data: CheckInUncheckedCreateInput) {
     const checkIn = {
       id: data.id ?? crypto.randomUUID(),
       user_id: data.user_id,
@@ -23,7 +23,7 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
     return Promise.resolve(checkIn)
   }
 
-  async save(checkIn: CheckIn): Promise<CheckIn> {
+  async save(checkIn: CheckIn) {
     const checkInIndex = this.checkIns.findIndex((item) => item.id === checkIn.id)
 
     if (checkInIndex >= 0) {
@@ -33,7 +33,7 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
     return checkIn
   }
 
-  async findByUserIdOnDate(userId: string, date: Date): Promise<CheckIn | null> {
+  async findByUserIdOnDate(userId: string, date: Date) {
     const startOfTheDay = DateUtils.startOfTheDay(date)
     const endOfTheDay = DateUtils.endOfTheDay(date)
 
@@ -52,11 +52,7 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
     return checkInOnSameDate || null
   }
 
-  async findManyByUserId(data: {
-    userId: string
-    page?: number
-    limit?: number
-  }): Promise<CheckIn[]> {
+  async findManyByUserId(data: { userId: string; page?: number; limit?: number }) {
     const currentPage = data.page ?? 1
     const itemsPerPage = data.limit ?? PAGINATION_DEFAULT_PAGE_SIZE
 
@@ -68,11 +64,11 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
       .slice(startIndex, endIndex)
   }
 
-  async countByUserId(userId: string): Promise<number> {
+  async countByUserId(userId: string) {
     return this.checkIns.filter((checkIn) => checkIn.user_id === userId).length
   }
 
-  async findById(id: string): Promise<CheckIn | null> {
+  async findById(id: string) {
     const check = this.checkIns.find((check) => check.id === id)
     return check || null
   }

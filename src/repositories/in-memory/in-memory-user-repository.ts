@@ -6,7 +6,7 @@ import type { UsersRepository } from '../users-repository'
 export class InMemoryUsersRepository implements UsersRepository {
   private users: User[] = []
 
-  async create(data: UserCreateInput): Promise<User> {
+  async create(data: UserCreateInput) {
     const user = {
       id: data.id ?? crypto.randomUUID(),
       name: data.name,
@@ -21,12 +21,12 @@ export class InMemoryUsersRepository implements UsersRepository {
     return user
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string) {
     const user = this.users.find((user) => user.email === email)
     return user || null
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string) {
     const user = this.users.find((user) => user.id === id)
     return user || null
   }

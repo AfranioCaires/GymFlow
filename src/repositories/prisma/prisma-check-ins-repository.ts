@@ -7,22 +7,22 @@ import { DateUtils } from '@/util/date-utils'
 import type { CheckInsRepository } from '../check-ins-repository'
 
 export class PrismaCheckInsRepository implements CheckInsRepository {
-  async create(data: CheckInUncheckedCreateInput): Promise<CheckIn> {
+  async create(data: CheckInUncheckedCreateInput) {
     return await prisma.checkIn.create({ data })
   }
 
-  async findById(id: string): Promise<CheckIn | null> {
+  async findById(id: string) {
     return prisma.checkIn.findFirst({ where: { id } })
   }
 
-  async save(checkIn: CheckIn): Promise<CheckIn> {
+  async save(checkIn: CheckIn) {
     return await prisma.checkIn.update({
       data: { validated_at: checkIn.validated_at },
       where: { id: checkIn.id },
     })
   }
 
-  async findByUserIdOnDate(userId: string, date: Date): Promise<CheckIn | null> {
+  async findByUserIdOnDate(userId: string, date: Date) {
     const startOfTheDay = DateUtils.startOfTheDay(date)
     const endOfTheDay = DateUtils.endOfTheDay(date)
 
@@ -37,11 +37,7 @@ export class PrismaCheckInsRepository implements CheckInsRepository {
     })
   }
 
-  async findManyByUserId(data: {
-    userId: string
-    page?: number
-    limit?: number
-  }): Promise<CheckIn[]> {
+  async findManyByUserId(data: { userId: string; page?: number; limit?: number }) {
     const currentPage = data.page ?? 1
     const itemsPerPage = data.limit ?? PAGINATION_DEFAULT_PAGE_SIZE
 

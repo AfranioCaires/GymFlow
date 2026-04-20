@@ -9,7 +9,7 @@ import type { GymsRepository } from '../gyms-repository'
 export class InMemoryGymsRepository implements GymsRepository {
   readonly gyms: Gym[] = []
 
-  async create(data: GymCreateInput): Promise<Gym> {
+  async create(data: GymCreateInput) {
     const gym = {
       id: data.id ?? crypto.randomUUID(),
       title: data.title,
@@ -26,12 +26,12 @@ export class InMemoryGymsRepository implements GymsRepository {
     return Promise.resolve(gym)
   }
 
-  async findById(id: string): Promise<Gym | null> {
+  async findById(id: string) {
     const gym = this.gyms.find((gym) => gym.id === id)
     return gym || null
   }
 
-  async findManyByTitle(data: { query: string; page?: number; limit?: number }): Promise<Gym[]> {
+  async findManyByTitle(data: { query: string; page?: number; limit?: number }) {
     const currentPage = data.page ?? 1
     const itemsPerPage = data.limit ?? PAGINATION_DEFAULT_PAGE_SIZE
 
@@ -45,7 +45,7 @@ export class InMemoryGymsRepository implements GymsRepository {
     return gyms
   }
 
-  async findManyNearby(data: FetchNeabyGymsDto & Pagination): Promise<Gym[]> {
+  async findManyNearby(data: FetchNeabyGymsDto & Pagination) {
     const { userLatitude, userLongitude, page, limit } = data
 
     const currentPage = page ?? 1
