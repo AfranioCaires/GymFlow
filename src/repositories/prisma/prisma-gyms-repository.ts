@@ -1,11 +1,10 @@
 import { PAGINATION_DEFAULT_PAGE_SIZE, type Pagination } from '@/config/pagination'
+import type { Gym } from '@/generated/prisma/client'
 import type { GymCreateInput } from '@/generated/prisma/models'
 import { prisma } from '@/lib/prisma'
 import type { FetchNeabyGymsDto } from '@/use-cases/fetch-nearby-gyms'
-import { getDistanceBetweenCoordinates } from '@/util/calculate-distance'
 
 import type { GymsRepository } from '../gyms-repository'
-
 export class PrismaGymsRepository implements GymsRepository {
   async create(data: GymCreateInput) {
     return await prisma.gym.create({ data })
@@ -35,40 +34,37 @@ export class PrismaGymsRepository implements GymsRepository {
 
   async findManyNearby(data: FetchNeabyGymsDto & Pagination) {
     const { userLatitude, userLongitude, page, limit } = data
-
     const currentPage = page ?? 1
     const itemsPerPage = limit ?? PAGINATION_DEFAULT_PAGE_SIZE
-
     const DESIRED_DISTANCE_IN_KILOMETERS = 10
-    const KILOMETERS_PER_DEGREE = 111
 
-    const radiusInDegrees = DESIRED_DISTANCE_IN_KILOMETERS / KILOMETERS_PER_DEGREE
+    const gyms = await prisma.$queryRaw<Gym[]>`
+      SELECT 
+        *,
+        (
+          6371 * ACOS(
+            COS(RADIANS(${userLatitude})) 
+            * COS(RADIANS(latitude)) 
+            * COS(RADIANS(longitude) - RADIANS(${userLongitude})) 
+            + SIN(RADIANS(${userLatitude})) 
+            * SIN(RADIANS(latitude))
+          )
+        ) AS distance
+      FROM gyms
+      WHERE (
+        6371 * ACOS(
+          COS(RADIANS(${userLatitude})) 
+          * COS(RADIANS(latitude)) 
+          * COS(RADIANS(longitude) - RADIANS(${userLongitude})) 
+          + SIN(RADIANS(${userLatitude})) 
+          * SIN(RADIANS(latitude))
+        )
+      ) <= ${DESIRED_DISTANCE_IN_KILOMETERS}
+      ORDER BY distance ASC
+      LIMIT ${itemsPerPage}
+      OFFSET ${(currentPage - 1) * itemsPerPage}
+    `
 
-    const gyms = await prisma.gym.findMany({
-      where: {
-        AND: [
-          {
-            latitude: { gte: userLatitude - radiusInDegrees, lte: userLatitude + radiusInDegrees },
-          },
-          {
-            longitude: {
-              gte: userLongitude - radiusInDegrees,
-              lte: userLongitude + radiusInDegrees,
-            },
-          },
-        ],
-      },
-      take: itemsPerPage,
-      skip: (currentPage - 1) * itemsPerPage,
-    })
-
-    return gyms.filter((gym) => {
-      const distance = getDistanceBetweenCoordinates(
-        { latitude: userLatitude, longitude: userLongitude },
-        { latitude: gym.latitude, longitude: gym.longitude },
-      )
-
-      return distance < DESIRED_DISTANCE_IN_KILOMETERS
-    })
+    return gyms
   }
 }
