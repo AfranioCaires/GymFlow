@@ -19,12 +19,7 @@ export class PrismaGymsRepository implements GymsRepository {
     const pageItems = data.limit ?? PAGINATION_DEFAULT_PAGE_SIZE
 
     const gyms = await prisma.gym.findMany({
-      where: {
-        title: {
-          contains: data.query,
-          mode: 'insensitive',
-        },
-      },
+      where: { title: { contains: data.query, mode: 'insensitive' } },
       take: pageItems,
       skip: (currentPage - 1) * pageItems,
     })
