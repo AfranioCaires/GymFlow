@@ -20,14 +20,17 @@ export async function authenticateController(request: FastifyRequest, reply: Fas
   ])
 
   if (error) {
-    return reply.status(400).send({ message: error.message,  })
+    return reply.status(400).send({ message: error.message })
   }
 
-  const token = await reply.jwtSign({},{
-    sign: {
-    sub: data.user.id    }
-  }
-)
+  const token = await reply.jwtSign(
+    {},
+    {
+      sign: {
+        sub: data.user.id,
+      },
+    },
+  )
 
-  return reply.status(200).send({token})
+  return reply.status(200).send({ token })
 }
