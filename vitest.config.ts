@@ -1,5 +1,12 @@
-import { loadEnv } from 'vite'
+import fs from 'node:fs'
+import path from 'node:path'
+
+import { parse } from 'dotenv'
 import { defineConfig } from 'vitest/config'
+
+const envFile = path.resolve(process.cwd(), '.env.test')
+const env = fs.existsSync(envFile) ? parse(fs.readFileSync(envFile)) : {}
+
 export default defineConfig({
   resolve: {
     tsconfigPaths: true,
@@ -13,8 +20,8 @@ export default defineConfig({
         test: {
           name: 'e2e',
           dir: 'test/',
-          environment: './prisma/e2e-environment/prisma-e2e-test-environment',
-          env: loadEnv('', process.cwd(), ''),
+          environment: './prisma/prisma-test-environment.ts',
+          env,
         },
       },
     ],
