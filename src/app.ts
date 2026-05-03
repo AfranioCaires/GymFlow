@@ -3,7 +3,7 @@ import { fastify } from 'fastify'
 import { z, ZodError } from 'zod'
 
 import { env } from './config/env'
-import { userRoutes } from './http/routes/user.routes'
+import { userRoutes } from './http/controllers/users/user.routes'
 
 export const app = fastify({
   logger: {
