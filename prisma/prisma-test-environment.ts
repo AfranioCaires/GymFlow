@@ -1,28 +1,71 @@
 import { execSync } from 'node:child_process'
+import { randomUUID } from 'node:crypto'
+import fs from 'node:fs'
+import path from 'node:path'
 
+import { parse } from 'dotenv'
 import { Client } from 'pg'
 import type { Environment } from 'vitest/environments'
+
+function generateDatabaseURL(databaseName: string) {
+  if (!process.env.DATABASE_URL) {
+    throw new Error('Please provide a DATABASE_URL environment variable.')
+  }
+
+  const url = new URL(process.env.DATABASE_URL)
+
+  url.pathname = `/${databaseName}`
+
+  return url.toString()
+}
 
 export default <Environment>{
   name: 'prisma',
   viteEnvironment: 'ssr',
   async setup() {
-    const url = new URL(process.env.DATABASE_URL!)
-    const databaseName = url.pathname.slice(1)
+    const envFile = path.resolve(process.cwd(), '.env.test')
 
-    const adminUrl = new URL(process.env.DATABASE_URL!)
+    if (fs.existsSync(envFile)) {
+      const env = parse(fs.readFileSync(envFile))
+
+      for (const key in env) {
+        process.env[key] = env[key]
+      }
+    }
+
+    const databaseName = `gym_test_${randomUUID().replace(/-/g, '_')}`
+    const databaseURL = generateDatabaseURL(databaseName)
+
+    process.env.DATABASE_URL = databaseURL
+
+    const adminUrl = new URL(databaseURL)
     adminUrl.pathname = '/postgres'
-    const client = new Client({ connectionString: adminUrl.toString() })
+    adminUrl.search = ''
+
+    const client = new Client({
+      connectionString: adminUrl.toString(),
+    })
 
     await client.connect()
-    await client.query(`DROP DATABASE IF EXISTS "${databaseName}"`)
     await client.query(`CREATE DATABASE "${databaseName}"`)
     await client.end()
 
     execSync('bun db:migrate:deploy', { stdio: 'inherit' })
 
     return {
-      async teardown() {},
+      async teardown() {
+        const adminUrl = new URL(databaseURL)
+        adminUrl.pathname = '/postgres'
+        adminUrl.search = ''
+
+        const client = new Client({
+          connectionString: adminUrl.toString(),
+        })
+
+        await client.connect()
+        await client.query(`DROP DATABASE IF EXISTS "${databaseName}" WITH (FORCE)`)
+        await client.end()
+      },
     }
   },
 }
