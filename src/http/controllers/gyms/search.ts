@@ -1,0 +1,21 @@
+import type { FastifyReply, FastifyRequest } from 'fastify'
+import { z } from 'zod'
+
+import { paginationSchema } from '@/config/pagination'
+import { SearchGymsUseCaseFactory } from '@/use-cases/factories/make-search-gyms-use-case'
+
+export async function searchGymsController(request: FastifyRequest, reply: FastifyReply) {
+  const createGymBodySchema = z
+    .object({
+      query: z.string(),
+    })
+    .extend(paginationSchema)
+
+  const searchGymUseCase = SearchGymsUseCaseFactory.create()
+
+  const input = createGymBodySchema.parse(request.body)
+
+  const { gyms } = await searchGymUseCase.execute(input)
+
+  return reply.status(200).send({ gyms })
+}
