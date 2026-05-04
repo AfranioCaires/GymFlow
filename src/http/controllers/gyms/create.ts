@@ -9,7 +9,7 @@ export async function createGymController(request: FastifyRequest, reply: Fastif
     description: z.string().nullable(),
     phone: z.string().nullable(),
     latitude: z.number().refine((value) => Math.abs(value) <= 90),
-    longitude: z.number().refine((value) => Math.abs(value) >= 180),
+    longitude: z.number().refine((value) => Math.abs(value) <= 180),
   })
 
   const createGymUseCase = CreateGymUseCaseFactory.create()
@@ -18,5 +18,5 @@ export async function createGymController(request: FastifyRequest, reply: Fastif
 
   const { gym } = await createGymUseCase.execute(input)
 
-  return reply.status(200).send({ gym })
+  return reply.status(201).send({ gym })
 }

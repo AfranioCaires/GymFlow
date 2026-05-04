@@ -9,7 +9,7 @@ export async function searchGymsController(request: FastifyRequest, reply: Fasti
     .object({
       query: z.string(),
     })
-    .extend(paginationSchema)
+    .extend(paginationSchema.shape)
 
   const searchGymUseCase = SearchGymsUseCaseFactory.create()
 
