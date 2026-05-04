@@ -5,7 +5,7 @@ import { paginationSchema } from '@/config/pagination'
 import { SearchGymsUseCaseFactory } from '@/use-cases/factories/make-search-gyms-use-case'
 
 export async function searchGymsController(request: FastifyRequest, reply: FastifyReply) {
-  const createGymBodySchema = z
+  const searcGymsQuerySchema = z
     .object({
       query: z.string(),
     })
@@ -13,7 +13,7 @@ export async function searchGymsController(request: FastifyRequest, reply: Fasti
 
   const searchGymUseCase = SearchGymsUseCaseFactory.create()
 
-  const input = createGymBodySchema.parse(request.body)
+  const input = searcGymsQuerySchema.parse(request.query)
 
   const { gyms } = await searchGymUseCase.execute(input)
 
