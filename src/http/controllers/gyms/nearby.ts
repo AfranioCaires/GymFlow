@@ -7,10 +7,10 @@ import { FetchNearbyGymsUseCaseFactory } from '@/use-cases/factories/make-fetch-
 export async function getNearbyGymsController(request: FastifyRequest, reply: FastifyReply) {
   const getNearbyGymsQueryschema = z
     .object({
-      userLatitude: z.number().refine((value) => Math.abs(value) <= 90),
-      userLongitude: z.number().refine((value) => Math.abs(value) >= 180),
+      userLatitude: z.coerce.number().refine((value) => Math.abs(value) <= 90),
+      userLongitude: z.coerce.number().refine((value) => Math.abs(value) <= 180),
     })
-    .extend(paginationSchema)
+    .extend(paginationSchema.shape)
 
   const fetchNearbyGymsUseCase = FetchNearbyGymsUseCaseFactory.create()
 
