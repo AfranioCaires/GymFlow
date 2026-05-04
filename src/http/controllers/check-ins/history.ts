@@ -1,18 +1,18 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
-import { paginationSchema } from '@/config/pagination'
 import { FetchUserCheckInHistoryUseCaseFactory } from '@/use-cases/factories/make-fetch-user-check-in-history-use-case'
 
+import type { checkInHistoryQuerySchema } from './schemas'
+import type { z } from 'zod'
+
 export async function getUserCheckInHistoryController(
-  request: FastifyRequest,
+  request: FastifyRequest<{ Querystring: z.infer<typeof checkInHistoryQuerySchema> }>,
   reply: FastifyReply,
 ) {
   const checkInHistoryUseCase = FetchUserCheckInHistoryUseCaseFactory.create()
 
-  const pagination = paginationSchema.parse(request.query)
-
   const { checkIns } = await checkInHistoryUseCase.execute({
-    pagination,
+    pagination: request.query,
     userId: request.user.sub,
   })
 

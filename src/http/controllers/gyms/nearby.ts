@@ -1,22 +1,17 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import { z } from 'zod'
 
-import { paginationSchema } from '@/config/pagination'
 import { FetchNearbyGymsUseCaseFactory } from '@/use-cases/factories/make-fetch-nearby-gyms-use-case'
 
-export async function getNearbyGymsController(request: FastifyRequest, reply: FastifyReply) {
-  const getNearbyGymsQueryschema = z
-    .object({
-      userLatitude: z.coerce.number().refine((value) => Math.abs(value) <= 90),
-      userLongitude: z.coerce.number().refine((value) => Math.abs(value) <= 180),
-    })
-    .extend(paginationSchema.shape)
+import type { nearbyGymsQuerySchema } from './schemas'
+import type { z } from 'zod'
 
+export async function getNearbyGymsController(
+  request: FastifyRequest<{ Querystring: z.infer<typeof nearbyGymsQuerySchema> }>,
+  reply: FastifyReply,
+) {
   const fetchNearbyGymsUseCase = FetchNearbyGymsUseCaseFactory.create()
 
-  const input = getNearbyGymsQueryschema.parse(request.query)
-
-  const { gyms } = await fetchNearbyGymsUseCase.execute(input)
+  const { gyms } = await fetchNearbyGymsUseCase.execute(request.query)
 
   return reply.status(200).send({ gyms })
 }

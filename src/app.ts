@@ -1,5 +1,13 @@
 import fastifyJwt from '@fastify/jwt'
+import fastifySwagger from '@fastify/swagger'
+import fastifySwaggerUi from '@fastify/swagger-ui'
 import { fastify } from 'fastify'
+import {
+  jsonSchemaTransform,
+  serializerCompiler,
+  validatorCompiler,
+  type ZodTypeProvider,
+} from 'fastify-type-provider-zod'
 import { z, ZodError } from 'zod'
 
 import { env } from './config/env'
@@ -17,12 +25,42 @@ export const app = fastify({
       },
     },
   },
+}).withTypeProvider<ZodTypeProvider>()
+
+app.setValidatorCompiler(validatorCompiler)
+app.setSerializerCompiler(serializerCompiler)
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+})
+
+app.register(fastifySwagger, {
+  openapi: {
+    info: {
+      title: 'Gympass API',
+      description: 'API for gym check-ins and management',
+      version: '1.0.0',
+    },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+  },
+  transform: jsonSchemaTransform,
+})
+
+app.register(fastifySwaggerUi, {
+  routePrefix: '/docs',
 })
 
 app.register(userRoutes)
 app.register(gymRoutes)
 app.register(checkInsRoutes)
-app.register(fastifyJwt, { secret: env.JWT_SECRET })
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
