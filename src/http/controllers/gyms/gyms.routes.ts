@@ -9,7 +9,7 @@ import {
   gymsResponseSchema,
   nearbyGymsQuerySchema,
   searchGymsQuerySchema,
-} from './schemas'
+} from './dto'
 import { searchGymsController } from './search'
 
 export async function gymRoutes(app: FastifyInstance) {

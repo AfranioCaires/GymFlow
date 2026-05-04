@@ -2,7 +2,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 
 import { SearchGymsUseCaseFactory } from '@/use-cases/factories/make-search-gyms-use-case'
 
-import type { searchGymsQuerySchema } from './schemas'
+import type { searchGymsQuerySchema } from './dto'
 import type { z } from 'zod'
 
 export async function searchGymsController(

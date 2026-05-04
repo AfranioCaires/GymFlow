@@ -4,7 +4,7 @@ import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-e
 import { RegisterUserUseCaseFactory } from '@/use-cases/factories/make-register-user-use-case'
 import { catchError } from '@/util/error-catcher'
 
-import type { registerBodySchema } from './schemas'
+import type { registerBodySchema } from './dto'
 import type { z } from 'zod'
 
 export async function registerController(

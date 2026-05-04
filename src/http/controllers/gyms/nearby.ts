@@ -2,7 +2,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 
 import { FetchNearbyGymsUseCaseFactory } from '@/use-cases/factories/make-fetch-nearby-gyms-use-case'
 
-import type { nearbyGymsQuerySchema } from './schemas'
+import type { nearbyGymsQuerySchema } from './dto'
 import type { z } from 'zod'
 
 export async function getNearbyGymsController(

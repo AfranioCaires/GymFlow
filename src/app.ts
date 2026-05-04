@@ -1,6 +1,6 @@
 import fastifyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
-import fastifySwaggerUi from '@fastify/swagger-ui'
+import apiReference from '@scalar/fastify-api-reference'
 import { fastify } from 'fastify'
 import {
   jsonSchemaTransform,
@@ -54,8 +54,13 @@ app.register(fastifySwagger, {
   transform: jsonSchemaTransform,
 })
 
-app.register(fastifySwaggerUi, {
+app.register(apiReference, {
   routePrefix: '/docs',
+  configuration: {
+    spec: {
+      content: () => app.swagger(),
+    },
+  },
 })
 
 app.register(userRoutes)

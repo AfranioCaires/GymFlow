@@ -4,7 +4,7 @@ import { InvalidCredentialsError } from '@/use-cases/errors/invalid-credentials-
 import { AuthenticateUseCaseFactory } from '@/use-cases/factories/make-authenticate-use-case'
 import { catchError } from '@/util/error-catcher'
 
-import type { authenticateBodySchema } from './schemas'
+import type { authenticateBodySchema } from './dto'
 import type { z } from 'zod'
 
 export async function authenticateController(

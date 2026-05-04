@@ -6,7 +6,7 @@ import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-err
 import { CheckInUseCaseFactory } from '@/use-cases/factories/make-check-in-use-case'
 import { catchError } from '@/util/error-catcher'
 
-import type { createCheckInBodySchema, createCheckInParamsSchema } from './schemas'
+import type { createCheckInBodySchema, createCheckInParamsSchema } from './dto'
 import type { z } from 'zod'
 
 export async function createCheckInController(

@@ -5,7 +5,7 @@ import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-err
 import { ValidateCheckInUseCaseFactory } from '@/use-cases/factories/make-validate-check-in-use-case'
 import { catchError } from '@/util/error-catcher'
 
-import type { validateCheckInParamsSchema } from './schemas'
+import type { validateCheckInParamsSchema } from './dto'
 import type { z } from 'zod'
 
 export async function validateCheckInController(

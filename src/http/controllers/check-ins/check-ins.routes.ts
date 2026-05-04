@@ -13,7 +13,7 @@ import {
   createCheckInParamsSchema,
   userMetricsResponseSchema,
   validateCheckInParamsSchema,
-} from './schemas'
+} from './dto'
 import { validateCheckInController } from './validate'
 
 export async function checkInsRoutes(app: FastifyInstance) {

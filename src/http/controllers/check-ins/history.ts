@@ -2,7 +2,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 
 import { FetchUserCheckInHistoryUseCaseFactory } from '@/use-cases/factories/make-fetch-user-check-in-history-use-case'
 
-import type { checkInHistoryQuerySchema } from './schemas'
+import type { checkInHistoryQuerySchema } from './dto'
 import type { z } from 'zod'
 
 export async function getUserCheckInHistoryController(

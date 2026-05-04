@@ -9,7 +9,7 @@ import {
   authenticateResponseSchema,
   registerBodySchema,
   userResponseSchema,
-} from './schemas'
+} from './dto'
 
 export async function userRoutes(app: FastifyInstance) {
   app.post(
