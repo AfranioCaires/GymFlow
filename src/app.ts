@@ -56,11 +56,6 @@ app.register(fastifySwagger, {
 
 app.register(apiReference, {
   routePrefix: '/docs',
-  configuration: {
-    spec: {
-      content: () => app.swagger(),
-    },
-  },
 })
 
 app.register(userRoutes)
