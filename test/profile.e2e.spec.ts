@@ -8,7 +8,7 @@ describe('Authenticate (e2e)', () => {
   beforeAll(async () => await app.ready())
   afterAll(async () => await app.close())
 
-  it('should be get a user profile', async () => {
+  it('should be able to get a user profile', async () => {
     const { token, userData } = await makeAuthenticatedUser(app)
 
     const response = await app
