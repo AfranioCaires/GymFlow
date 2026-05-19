@@ -25,7 +25,7 @@ export const nearbyGymsQuerySchema = z
 
 export const gymResponseSchema = z.object({
   gym: z.object({
-    id: z.string().uuid(),
+    id: z.uuid(),
     title: z.string(),
     description: z.string().nullable(),
     phone: z.string().nullable(),
@@ -37,7 +37,7 @@ export const gymResponseSchema = z.object({
 export const gymsResponseSchema = z.object({
   gyms: z.array(
     z.object({
-      id: z.string().uuid(),
+      id: z.uuid(),
       title: z.string(),
       description: z.string().nullable(),
       phone: z.string().nullable(),

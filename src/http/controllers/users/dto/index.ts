@@ -13,9 +13,9 @@ export const authenticateBodySchema = z.object({
 
 export const userResponseSchema = z.object({
   user: z.object({
-    id: z.string().uuid(),
+    id: z.uuid(),
     name: z.string(),
-    email: z.string().email(),
+    email: z.email(),
     created_at: z.date(),
   }),
 })

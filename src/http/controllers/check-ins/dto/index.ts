@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { paginationSchema } from '@/config/pagination'
 
 export const createCheckInParamsSchema = z.object({
-  gymId: z.string().uuid(),
+  gymId: z.uuid(),
 })
 
 export const createCheckInBodySchema = z.object({
@@ -12,29 +12,29 @@ export const createCheckInBodySchema = z.object({
 })
 
 export const validateCheckInParamsSchema = z.object({
-  checkInId: z.string().uuid(),
+  checkInId: z.uuid(),
 })
 
 export const checkInHistoryQuerySchema = paginationSchema
 
 export const checkInResponseSchema = z.object({
   checkIn: z.object({
-    id: z.string().uuid(),
+    id: z.uuid(),
     created_at: z.date(),
     validated_at: z.date().nullable(),
-    user_id: z.string().uuid(),
-    gym_id: z.string().uuid(),
+    user_id: z.uuid(),
+    gym_id: z.uuid(),
   }),
 })
 
 export const checkInHistoryResponseSchema = z.object({
   checkIns: z.array(
     z.object({
-      id: z.string().uuid(),
+      id: z.uuid(),
       created_at: z.date(),
       validated_at: z.date().nullable(),
-      user_id: z.string().uuid(),
-      gym_id: z.string().uuid(),
+      user_id: z.uuid(),
+      gym_id: z.uuid(),
     }),
   ),
 })
