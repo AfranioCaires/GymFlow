@@ -43,8 +43,6 @@ describe('Create gym (e2e)', () => {
       })
       .headers({ authorization: `Bearer ${token}` })
 
-    console.log(response.body)
-
     expect(response.statusCode).toBe(200)
     expect(response.json().gyms).toHaveLength(1)
     expect(response.json().gyms).toEqual(

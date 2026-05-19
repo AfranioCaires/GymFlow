@@ -29,8 +29,6 @@ describe('Create a check-in (e2e)', () => {
       .body({ userLatitude: -23.5505, userLongitude: -46.6333 })
       .headers({ authorization: `Bearer ${token}` })
 
-    console.log(response.body)
-
     expect(response.statusCode).toBe(201)
   })
 })

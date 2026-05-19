@@ -37,8 +37,6 @@ describe('Check-in metrics (e2e)', () => {
       .get('/check-ins/metrics')
       .headers({ authorization: `Bearer ${token}` })
 
-    console.log(response.body)
-
     expect(response.statusCode).toBe(200)
     expect(response.json().checkInsCount).toEqual(2)
   })

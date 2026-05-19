@@ -23,8 +23,6 @@ describe('Create gym (e2e)', () => {
       })
       .headers({ authorization: `Bearer ${token}` })
 
-    console.log(response.body)
-
     expect(response.statusCode).toBe(201)
   })
 })

@@ -37,8 +37,6 @@ describe('Check-in history (e2e)', () => {
       .get('/check-ins/history')
       .headers({ authorization: `Bearer ${token}` })
 
-    console.log(response.body)
-
     expect(response.statusCode).toBe(200)
     expect(response.json().checkIns).toEqual([
       expect.objectContaining({
