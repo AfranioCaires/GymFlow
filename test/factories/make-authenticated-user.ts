@@ -16,7 +16,7 @@ export async function makeAuthenticatedUser(
 
   const { password, ...userWithoutPassword } = userData
 
-  await prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       ...userWithoutPassword,
       password_hash: await hash(password, 6),
@@ -29,5 +29,5 @@ export async function makeAuthenticatedUser(
   })
 
   const { token } = authResponse.json()
-  return { token, userData }
+  return { token, userData: { ...userData, id: user.id } }
 }
