@@ -2,7 +2,6 @@ import type { FastifyInstance } from 'fastify'
 
 import { verifyJWT } from '../../middlewares/verify-jwt'
 import { createGymController } from './create'
-import { getNearbyGymsController } from './nearby'
 import {
   createGymBodySchema,
   gymResponseSchema,
@@ -10,6 +9,7 @@ import {
   nearbyGymsQuerySchema,
   searchGymsQuerySchema,
 } from './dto'
+import { getNearbyGymsController } from './nearby'
 import { searchGymsController } from './search'
 
 export async function gymRoutes(app: FastifyInstance) {
@@ -21,7 +21,6 @@ export async function gymRoutes(app: FastifyInstance) {
       schema: {
         tags: ['Gyms'],
         summary: 'Create a new gym',
-        security: [{ bearerAuth: [] }],
         body: createGymBodySchema,
         response: {
           201: gymResponseSchema,
@@ -37,7 +36,6 @@ export async function gymRoutes(app: FastifyInstance) {
       schema: {
         tags: ['Gyms'],
         summary: 'Search for gyms by title',
-        security: [{ bearerAuth: [] }],
         querystring: searchGymsQuerySchema,
         response: {
           200: gymsResponseSchema,
@@ -53,7 +51,6 @@ export async function gymRoutes(app: FastifyInstance) {
       schema: {
         tags: ['Gyms'],
         summary: 'Find nearby gyms',
-        security: [{ bearerAuth: [] }],
         querystring: nearbyGymsQuerySchema,
         response: {
           200: gymsResponseSchema,

@@ -3,8 +3,6 @@ import { z } from 'zod'
 
 import { verifyJWT } from '../../middlewares/verify-jwt'
 import { createCheckInController } from './create'
-import { getUserCheckInHistoryController } from './history'
-import { getUserCheckInMetricsController } from './metrics'
 import {
   checkInHistoryQuerySchema,
   checkInHistoryResponseSchema,
@@ -14,6 +12,8 @@ import {
   userMetricsResponseSchema,
   validateCheckInParamsSchema,
 } from './dto'
+import { getUserCheckInHistoryController } from './history'
+import { getUserCheckInMetricsController } from './metrics'
 import { validateCheckInController } from './validate'
 
 export async function checkInsRoutes(app: FastifyInstance) {
@@ -25,7 +25,6 @@ export async function checkInsRoutes(app: FastifyInstance) {
       schema: {
         tags: ['Check-ins'],
         summary: 'Get user check-in history',
-        security: [{ bearerAuth: [] }],
         querystring: checkInHistoryQuerySchema,
         response: {
           200: checkInHistoryResponseSchema,
@@ -41,7 +40,6 @@ export async function checkInsRoutes(app: FastifyInstance) {
       schema: {
         tags: ['Check-ins'],
         summary: 'Get user check-in metrics',
-        security: [{ bearerAuth: [] }],
         response: {
           200: userMetricsResponseSchema,
         },
@@ -56,7 +54,6 @@ export async function checkInsRoutes(app: FastifyInstance) {
       schema: {
         tags: ['Check-ins'],
         summary: 'Create a check-in at a gym',
-        security: [{ bearerAuth: [] }],
         params: createCheckInParamsSchema,
         body: createCheckInBodySchema,
         response: {
@@ -73,7 +70,6 @@ export async function checkInsRoutes(app: FastifyInstance) {
       schema: {
         tags: ['Check-ins'],
         summary: 'Validate a check-in',
-        security: [{ bearerAuth: [] }],
         params: validateCheckInParamsSchema,
         response: {
           204: z.null(),
