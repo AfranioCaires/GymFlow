@@ -1,4 +1,3 @@
-import { execSync } from 'node:child_process'
 import { randomUUID } from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -47,10 +46,8 @@ export default <Environment>{
     })
 
     await client.connect()
-    await client.query(`CREATE DATABASE "${databaseName}"`)
+    await client.query(`CREATE DATABASE "${databaseName}" TEMPLATE gym_template`)
     await client.end()
-
-    execSync('bun db:migrate:deploy', { stdio: 'inherit' })
 
     return {
       async teardown() {
