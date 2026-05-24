@@ -1,9 +1,12 @@
 import { Entity } from '@/core/domain/entity'
 
+export type UserRoles = 'ADMIN' | 'MEMBER'
+
 export type UserAttributes = {
   name: string
   email: string
   passwordHash: string
+  role: UserRoles
   createdAt?: Date
   updatedAt?: Date
 }
@@ -19,6 +22,10 @@ export class User extends Entity<UserAttributes> {
 
   get passwordHash() {
     return this.attributes.passwordHash
+  }
+
+  get role() {
+    return this.attributes.role
   }
 
   get createdAt() {

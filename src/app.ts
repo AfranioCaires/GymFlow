@@ -12,9 +12,9 @@ import {
 import { z, ZodError } from 'zod'
 
 import { env } from './config/env'
-import { checkInsRoutes } from './infra/http/routes/check-ins-routes'
-import { gymsRoutes } from './infra/http/routes/gyms-routes'
-import { usersRoutes } from './infra/http/routes/users-routes'
+import { checkInsRoutes } from './infra/http/controllers/check-ins/check-ins-routes'
+import { gymsRoutes } from './infra/http/controllers/gyms/gyms-routes'
+import { usersRoutes } from './infra/http/controllers/users/users-routes'
 
 export const app = fastify({
   logger: {
