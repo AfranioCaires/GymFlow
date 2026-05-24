@@ -9,6 +9,7 @@ import type { AuthenticateBodySchema } from './dto/users.dto'
 
 import '@fastify/jwt'
 import '@fastify/cookie'
+import { getUserTokens } from './shared/tokens'
 
 export async function authenticate(
   request: FastifyRequest<{ Body: AuthenticateBodySchema }>,
@@ -31,25 +32,9 @@ export async function authenticate(
   }
 
   const { user } = data
+  const { id, role } = user
 
-  const token = await reply.jwtSign(
-    {},
-    {
-      sign: {
-        sub: user.id,
-      },
-    },
-  )
-
-  const refreshToken = await reply.jwtSign(
-    {},
-    {
-      sign: {
-        sub: user.id,
-        expiresIn: '7d',
-      },
-    },
-  )
+  const { token, refreshToken } = await getUserTokens({ id, role, reply })
 
   return reply
     .setCookie('refreshToken', refreshToken, {
