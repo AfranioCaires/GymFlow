@@ -1,17 +1,17 @@
 import type { FastifyInstance } from 'fastify'
 
-import { HTTP_STATUS } from '../constants/http-status-codes'
-import { authenticate } from '../controllers/users/authenticate'
+import { HTTP_STATUS } from '../../constants/http-status-codes'
+import { verifyJWT } from '../../middlewares/verify-jwt'
+import { authenticate } from './authenticate'
 import {
   authenticateBodySchema,
   authenticateResponseSchema,
   registerBodySchema,
   userResponseSchema,
-} from '../controllers/users/dto/users.dto'
-import { getUserProfile } from '../controllers/users/get-user-profile'
-import { refreshToken } from '../controllers/users/refresh-token'
-import { register } from '../controllers/users/register'
-import { verifyJWT } from '../middlewares/verify-jwt'
+} from './dto/users.dto'
+import { getUserProfile } from './get-user-profile'
+import { refreshToken } from './refresh-token'
+import { register } from './register'
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post(
@@ -65,7 +65,6 @@ export async function usersRoutes(app: FastifyInstance) {
       schema: {
         tags: ['Users'],
         summary: 'Get user profile',
-        security: [{ bearerAuth: [] }],
         response: {
           [HTTP_STATUS.OK]: userResponseSchema,
         },

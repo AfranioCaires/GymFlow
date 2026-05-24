@@ -1,16 +1,17 @@
 import type { FastifyInstance } from 'fastify'
 
-import { create } from '../controllers/check-ins/create'
+import { verifyJWT } from '../../middlewares/verify-jwt'
+import { verifyUserRole } from '../../middlewares/verify-user-role'
+import { create } from './create'
 import {
   createCheckInBodySchema,
   createCheckInParamsSchema,
   validateCheckInParamsSchema,
   checkInHistoryQuerySchema,
-} from '../controllers/check-ins/dto/check-ins.dto'
-import { history } from '../controllers/check-ins/history'
-import { metrics } from '../controllers/check-ins/metrics'
-import { validate } from '../controllers/check-ins/validate'
-import { verifyJWT } from '../middlewares/verify-jwt'
+} from './dto/check-ins.dto'
+import { history } from './history'
+import { metrics } from './metrics'
+import { validate } from './validate'
 
 export async function checkInsRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJWT)
@@ -21,7 +22,6 @@ export async function checkInsRoutes(app: FastifyInstance) {
       schema: {
         tags: ['Check-ins'],
         summary: 'Get user check-in history',
-        security: [{ bearerAuth: [] }],
         querystring: checkInHistoryQuerySchema,
       },
     },
@@ -34,7 +34,6 @@ export async function checkInsRoutes(app: FastifyInstance) {
       schema: {
         tags: ['Check-ins'],
         summary: 'Get user check-in metrics',
-        security: [{ bearerAuth: [] }],
       },
     },
     metrics,
@@ -46,7 +45,6 @@ export async function checkInsRoutes(app: FastifyInstance) {
       schema: {
         tags: ['Check-ins'],
         summary: 'Create a new check-in',
-        security: [{ bearerAuth: [] }],
         params: createCheckInParamsSchema,
         body: createCheckInBodySchema,
       },
@@ -57,10 +55,10 @@ export async function checkInsRoutes(app: FastifyInstance) {
   app.patch(
     '/check-ins/:checkInId/validate',
     {
+      onRequest: [verifyUserRole('ADMIN')],
       schema: {
         tags: ['Check-ins'],
         summary: 'Validate a check-in',
-        security: [{ bearerAuth: [] }],
         params: validateCheckInParamsSchema,
       },
     },
