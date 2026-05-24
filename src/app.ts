@@ -12,9 +12,9 @@ import {
 import { z, ZodError } from 'zod'
 
 import { env } from './config/env'
-import { checkInsRoutes } from './http/controllers/check-ins/check-ins.routes'
-import { gymRoutes } from './http/controllers/gyms/gyms.routes'
-import { userRoutes } from './http/controllers/users/user.routes'
+import { checkInsRoutes } from './infra/http/routes/check-ins-routes'
+import { gymsRoutes } from './infra/http/routes/gyms-routes'
+import { usersRoutes } from './infra/http/routes/users-routes'
 
 export const app = fastify({
   logger: {
@@ -67,8 +67,8 @@ app.register(apiReference, {
   routePrefix: '/docs',
 })
 
-app.register(userRoutes)
-app.register(gymRoutes)
+app.register(usersRoutes)
+app.register(gymsRoutes)
 app.register(checkInsRoutes)
 
 app.setErrorHandler((error, _, reply) => {
