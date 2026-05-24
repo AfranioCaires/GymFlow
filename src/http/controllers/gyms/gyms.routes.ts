@@ -8,8 +8,8 @@ import {
   gymsResponseSchema,
   nearbyGymsQuerySchema,
   searchGymsQuerySchema,
-} from './dto'
-import { getNearbyGymsController } from './nearby'
+} from './dto/gyms.dto'
+import { nearbyGymsController } from './nearby'
 import { searchGymsController } from './search'
 
 export async function gymRoutes(app: FastifyInstance) {
@@ -57,6 +57,6 @@ export async function gymRoutes(app: FastifyInstance) {
         },
       },
     },
-    getNearbyGymsController,
+    nearbyGymsController,
   )
 }

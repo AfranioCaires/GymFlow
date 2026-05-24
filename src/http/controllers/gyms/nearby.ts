@@ -2,11 +2,10 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 
 import { FetchNearbyGymsUseCaseFactory } from '@/use-cases/factories/make-fetch-nearby-gyms-use-case'
 
-import type { nearbyGymsQuerySchema } from './dto'
-import type { z } from 'zod'
+import type { NearbyGymsQuerySchema } from './dto/gyms.dto'
 
-export async function getNearbyGymsController(
-  request: FastifyRequest<{ Querystring: z.infer<typeof nearbyGymsQuerySchema> }>,
+export async function nearbyGymsController(
+  request: FastifyRequest<{ Querystring: NearbyGymsQuerySchema }>,
   reply: FastifyReply,
 ) {
   const fetchNearbyGymsUseCase = FetchNearbyGymsUseCaseFactory.create()

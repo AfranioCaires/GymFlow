@@ -2,11 +2,10 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 
 import { SearchGymsUseCaseFactory } from '@/use-cases/factories/make-search-gyms-use-case'
 
-import type { searchGymsQuerySchema } from './dto'
-import type { z } from 'zod'
+import type { SearchGymsQuerySchema } from './dto/gyms.dto'
 
 export async function searchGymsController(
-  request: FastifyRequest<{ Querystring: z.infer<typeof searchGymsQuerySchema> }>,
+  request: FastifyRequest<{ Querystring: SearchGymsQuerySchema }>,
   reply: FastifyReply,
 ) {
   const searchGymUseCase = SearchGymsUseCaseFactory.create()

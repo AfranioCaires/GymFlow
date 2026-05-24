@@ -2,11 +2,10 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 
 import { CreateGymUseCaseFactory } from '@/use-cases/factories/make-create-gym-use-case'
 
-import type { createGymBodySchema } from './dto'
-import type { z } from 'zod'
+import type { CreateGymBodySchema } from './dto/gyms.dto'
 
 export async function createGymController(
-  request: FastifyRequest<{ Body: z.infer<typeof createGymBodySchema> }>,
+  request: FastifyRequest<{ Body: CreateGymBodySchema }>,
   reply: FastifyReply,
 ) {
   const createGymUseCase = CreateGymUseCaseFactory.create()
