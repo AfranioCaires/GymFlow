@@ -5,11 +5,10 @@ import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-err
 import { ValidateCheckInUseCaseFactory } from '@/use-cases/factories/make-validate-check-in-use-case'
 import { catchError } from '@/util/error-catcher'
 
-import type { validateCheckInParamsSchema } from './dto'
-import type { z } from 'zod'
+import type { ValidateCheckInParamsSchema } from './dto/check-ins.dto'
 
 export async function validateCheckInController(
-  request: FastifyRequest<{ Params: z.infer<typeof validateCheckInParamsSchema> }>,
+  request: FastifyRequest<{ Params: ValidateCheckInParamsSchema }>,
   reply: FastifyReply,
 ) {
   const { checkInId } = request.params

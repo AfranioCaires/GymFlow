@@ -6,13 +6,12 @@ import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-err
 import { CheckInUseCaseFactory } from '@/use-cases/factories/make-check-in-use-case'
 import { catchError } from '@/util/error-catcher'
 
-import type { createCheckInBodySchema, createCheckInParamsSchema } from './dto'
-import type { z } from 'zod'
+import type { CreateCheckInBodySchema, CreateCheckInParamsSchema } from './dto/check-ins.dto'
 
 export async function createCheckInController(
   request: FastifyRequest<{
-    Params: z.infer<typeof createCheckInParamsSchema>
-    Body: z.infer<typeof createCheckInBodySchema>
+    Params: CreateCheckInParamsSchema
+    Body: CreateCheckInBodySchema
   }>,
   reply: FastifyReply,
 ) {

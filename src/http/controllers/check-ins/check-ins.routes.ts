@@ -11,8 +11,8 @@ import {
   createCheckInParamsSchema,
   userMetricsResponseSchema,
   validateCheckInParamsSchema,
-} from './dto'
-import { getUserCheckInHistoryController } from './history'
+} from './dto/check-ins.dto'
+import { fetchUserCheckInHistoryController } from './history'
 import { getUserCheckInMetricsController } from './metrics'
 import { validateCheckInController } from './validate'
 
@@ -31,7 +31,7 @@ export async function checkInsRoutes(app: FastifyInstance) {
         },
       },
     },
-    getUserCheckInHistoryController,
+    fetchUserCheckInHistoryController,
   )
 
   app.get(

@@ -42,3 +42,11 @@ export const checkInHistoryResponseSchema = z.object({
 export const userMetricsResponseSchema = z.object({
   checkInsCount: z.number(),
 })
+
+export type CreateCheckInParamsSchema = z.infer<typeof createCheckInParamsSchema>
+export type CreateCheckInBodySchema = z.infer<typeof createCheckInBodySchema>
+export type ValidateCheckInParamsSchema = z.infer<typeof validateCheckInParamsSchema>
+export type CheckInHistoryQuerySchema = z.infer<typeof checkInHistoryQuerySchema>
+export type CheckInResponseSchema = z.infer<typeof checkInResponseSchema>
+export type CheckInHistoryResponseSchema = z.infer<typeof checkInHistoryResponseSchema>
+export type UserMetricsResponseSchema = z.infer<typeof userMetricsResponseSchema>
