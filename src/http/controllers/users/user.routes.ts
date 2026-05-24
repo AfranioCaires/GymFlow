@@ -7,7 +7,7 @@ import {
   authenticateResponseSchema,
   registerBodySchema,
   userResponseSchema,
-} from './dto'
+} from './dto/users.dto'
 import { getUserProfileController } from './get-user-profile'
 import { refreshTokenController } from './refresh-token'
 import { registerController } from './register-controller'

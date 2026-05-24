@@ -4,11 +4,10 @@ import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-e
 import { RegisterUserUseCaseFactory } from '@/use-cases/factories/make-register-user-use-case'
 import { catchError } from '@/util/error-catcher'
 
-import type { registerBodySchema } from './dto'
-import type { z } from 'zod'
+import type { RegisterBodySchema } from './dto/users.dto'
 
 export async function registerController(
-  request: FastifyRequest<{ Body: z.infer<typeof registerBodySchema> }>,
+  request: FastifyRequest<{ Body: RegisterBodySchema }>,
   reply: FastifyReply,
 ) {
   const registerUserUseCase = RegisterUserUseCaseFactory.create()
