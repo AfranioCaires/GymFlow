@@ -46,3 +46,9 @@ export const gymsResponseSchema = z.object({
     }),
   ),
 })
+
+export type CreateGymBodySchema = z.infer<typeof createGymBodySchema>
+export type SearchGymsQuerySchema = z.infer<typeof searchGymsQuerySchema>
+export type NearbyGymsQuerySchema = z.infer<typeof nearbyGymsQuerySchema>
+export type GymResponseSchema = z.infer<typeof gymResponseSchema>
+export type GymsResponseSchema = z.infer<typeof gymsResponseSchema>
