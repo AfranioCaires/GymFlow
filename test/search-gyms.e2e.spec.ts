@@ -9,7 +9,7 @@ describe('Create gym (e2e)', () => {
   afterAll(async () => await app.close())
 
   it('should be able to search for gyms', async () => {
-    const { token } = await makeAuthenticatedUser(app)
+    const { token } = await makeAuthenticatedUser({ app, isAdmin: true })
 
     await app
       .inject()

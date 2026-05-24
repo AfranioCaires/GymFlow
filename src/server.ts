@@ -1,6 +1,6 @@
 import './infra/instrumentation/instrumentation'
-
 import { env } from '@/config/env'
+
 import { app } from './app'
 import { registerPrismaLogs } from './lib/prisma'
 

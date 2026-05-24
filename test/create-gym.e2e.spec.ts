@@ -9,7 +9,7 @@ describe('Create gym (e2e)', () => {
   afterAll(async () => await app.close())
 
   it('should be able to create a gym', async () => {
-    const { token } = await makeAuthenticatedUser(app)
+    const { token } = await makeAuthenticatedUser({ app, isAdmin: true })
 
     const response = await app
       .inject()

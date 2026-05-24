@@ -1,17 +1,29 @@
+import { randomUUID } from 'node:crypto'
+
 import { hash } from 'bcrypt'
 import type { FastifyInstance } from 'fastify'
 
+import type { UserRoles } from '@/domain/entities/user'
 import { prisma } from '@/lib/prisma'
 
-export async function makeAuthenticatedUser(
-  app: FastifyInstance,
-  // isAdmin = false,
-) {
+export async function makeAuthenticatedUser({
+  app,
+  isAdmin = false,
+  email,
+  name = 'Arthur Morgan',
+}: {
+  app: FastifyInstance
+  isAdmin?: boolean
+  email?: string
+  name?: string
+}) {
+  const userEmail = email ?? `user-${randomUUID()}@test.com`
+
   const userData = {
-    name: 'Arthur Morgan',
-    email: 'arthurmorgan@test.com',
+    name,
+    email: userEmail,
     password: 'Abc123@',
-    // role: isAdmin ? 'ADMIN' : 'MEMBER',
+    role: (isAdmin ? 'ADMIN' : 'MEMBER') as UserRoles,
   }
 
   const { password, ...userWithoutPassword } = userData

@@ -10,10 +10,15 @@ describe('Check-in history (e2e)', () => {
   afterAll(async () => await app.close())
 
   it('should be able to list a check-in history', async () => {
-    const { token, userData } = await makeAuthenticatedUser(app)
-    const { id } = userData
+    const { token: adminToken } = await makeAuthenticatedUser({
+      app,
+      isAdmin: true,
+    })
 
-    const gym = await app
+    const { token: userToken, userData } = await makeAuthenticatedUser({ app })
+    const { id: userId } = userData
+
+    const gymResponse = await app
       .inject()
       .post('/gyms')
       .body({
@@ -23,29 +28,31 @@ describe('Check-in history (e2e)', () => {
         latitude: -23.5505,
         longitude: -46.6333,
       })
-      .headers({ authorization: `Bearer ${token}` })
+      .headers({ authorization: `Bearer ${adminToken}` })
+
+    const { gym } = gymResponse.json()
 
     await prisma.checkIn.createMany({
       data: [
-        { gym_id: gym.json().gym.id, user_id: id },
-        { gym_id: gym.json().gym.id, user_id: id },
+        { gym_id: gym.id, user_id: userId },
+        { gym_id: gym.id, user_id: userId },
       ],
     })
 
     const response = await app
       .inject()
       .get('/check-ins/history')
-      .headers({ authorization: `Bearer ${token}` })
+      .headers({ authorization: `Bearer ${userToken}` })
 
     expect(response.statusCode).toBe(200)
     expect(response.json().checkIns).toEqual([
       expect.objectContaining({
-        user_id: id,
-        gym_id: gym.json().gym.id,
+        user_id: userId,
+        gym_id: gym.id,
       }),
       expect.objectContaining({
-        user_id: id,
-        gym_id: gym.json().gym.id,
+        user_id: userId,
+        gym_id: gym.id,
       }),
     ])
   })

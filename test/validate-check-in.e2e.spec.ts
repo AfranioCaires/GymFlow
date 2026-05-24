@@ -10,9 +10,14 @@ describe('Create a check-in (e2e)', () => {
   afterAll(async () => await app.close())
 
   it('should be able to create a check-in', async () => {
-    const { token } = await makeAuthenticatedUser(app)
+    const { token: adminToken } = await makeAuthenticatedUser({
+      app,
+      isAdmin: true,
+    })
 
-    const gym = await app
+    const { token: userToken } = await makeAuthenticatedUser({ app })
+
+    const gymResponse = await app
       .inject()
       .post('/gyms')
       .body({
@@ -22,21 +27,25 @@ describe('Create a check-in (e2e)', () => {
         latitude: -23.5505,
         longitude: -46.6333,
       })
-      .headers({ authorization: `Bearer ${token}` })
+      .headers({ authorization: `Bearer ${adminToken}` })
 
-    const checkIn = await app
+    const { gym } = gymResponse.json()
+
+    const checkInResponse = await app
       .inject()
-      .post(`/gyms/${gym.json().gym.id}/check-ins`)
+      .post(`/gyms/${gym.id}/check-ins`)
       .body({ userLatitude: -23.5505, userLongitude: -46.6333 })
-      .headers({ authorization: `Bearer ${token}` })
+      .headers({ authorization: `Bearer ${userToken}` })
+
+    const { checkIn } = checkInResponse.json()
 
     const response = await app
       .inject()
-      .patch(`/check-ins/${checkIn.json().checkIn.id}/validate`)
-      .headers({ authorization: `Bearer ${token}` })
+      .patch(`/check-ins/${checkIn.id}/validate`)
+      .headers({ authorization: `Bearer ${adminToken}` })
 
     const validatedCheckIn = await prisma.checkIn.findUniqueOrThrow({
-      where: { id: checkIn.json().checkIn.id },
+      where: { id: checkIn.id },
     })
     expect(response.statusCode).toBe(204)
 
