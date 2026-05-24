@@ -9,6 +9,7 @@ import {
   userResponseSchema,
 } from './dto'
 import { getUserProfileController } from './get-user-profile'
+import { refreshTokenController } from './refresh-token'
 import { registerController } from './register-controller'
 
 export async function userRoutes(app: FastifyInstance) {
@@ -40,6 +41,12 @@ export async function userRoutes(app: FastifyInstance) {
       },
     },
     authenticateController,
+  )
+
+  app.patch(
+    '/token/refresh',
+    { schema: { tags: ['Users'], summary: 'Refresh a token', response: {} } },
+    refreshTokenController,
   )
 
   app.get(
