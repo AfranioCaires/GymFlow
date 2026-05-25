@@ -1,0 +1,15 @@
+FROM oven/bun:1.1 AS base
+WORKDIR /usr/src/app
+
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
+COPY . .
+
+RUN bun db:generate
+
+ENV NODE_ENV=production
+
+EXPOSE 3000
+
+CMD ["bun", "src/server.ts"]

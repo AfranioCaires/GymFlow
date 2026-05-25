@@ -1,0 +1,17 @@
+node_modules
+.git
+.github
+coverage
+docs
+test
+*.spec.ts
+dist
+build
+.env
+.env.test
+.env.example
+docker-compose.yaml
+README.md
+ARCHITECTURE.md
+GEMINI.md
+MEMORY.md

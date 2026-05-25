@@ -80,6 +80,20 @@ The platform implements business rules for proximity-based check-ins and time-re
    bun dev
    ```
 
+### Docker
+
+You can also run the application using Docker:
+
+1. Build the image:
+   ```bash
+   docker build -t gymflow .
+   ```
+
+2. Run the container:
+   ```bash
+   docker run -p 3000:3000 --env-file .env gymflow
+   ```
+
 ## Scripts
 
 The following scripts are available in the project:
