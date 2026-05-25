@@ -1,0 +1,51 @@
+name: E2E Tests
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-e2e:
+    name: Run E2E Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: bitnami/postgresql:latest
+        env:
+          POSTGRESQL_USERNAME: user
+          POSTGRESQL_PASSWORD: password
+          POSTGRESQL_DATABASE: gym_database
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U user -d gym_database"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: "postgresql://user:password@localhost:5432/gym_database?schema=public"
+      JWT_SECRET: "ci-test-secret"
+      NODE_ENV: "test"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Generate Prisma Client
+        run: bun db:generate
+
+      - name: Run Migrations
+        run: bun db:migrate:deploy
+
+      - name: Run E2E Tests
+        run: bun test:e2e

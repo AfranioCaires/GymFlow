@@ -1,10 +1,10 @@
 # Architecture and Diagrams
 
-This document contains the visual representation of the system's architecture, database schema, and core business flows.
+This document contains visual representations of the system architecture, database schema, and business flows.
 
 ## Database Schema (ER Diagram)
 
-Representing the relationships between Users, Gyms, and Check-ins.
+Relationships between Users, Gyms, and Check-ins.
 
 ```mermaid
 erDiagram
@@ -98,14 +98,14 @@ The project follows a modular structure inspired by Clean Architecture:
 
 ## Observability
 
-The project implements distributed tracing and structured logging to ensure the system is observable and easy to debug.
+The project implements tracing and logging.
 
-- **OpenTelemetry**: Integrated with Fastify and Prisma to export traces. It captures the entire lifecycle of a request, including database queries.
-- **Pino**: Used for structured logging, providing high-performance and machine-readable logs.
+- **OpenTelemetry**: Integrated with Fastify and Prisma to export traces.
+- **Pino**: Used for logging.
 
 ## API Documentation
 
-We use **Swagger (OpenAPI)** along with **Scalar** to provide a modern and interactive documentation interface.
+We use **Swagger (OpenAPI)** and **Scalar** for the documentation interface.
 
 - **Endpoint**: `/docs`
-- **Features**: Automatic schema generation from Zod types, interactive request testing, and clear visual representation of all available routes.
+- **Features**: Schema generation from Zod types, request testing, and route representation.

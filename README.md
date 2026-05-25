@@ -1,18 +1,20 @@
 # GymFlow
 
-GymFlow is a gym check-in management API built with Node.js, Fastify, and Prisma. It allows users to find nearby gyms, perform check-ins, and track their fitness history, while providing administrative tools for check-in validation and gym management.
+GymFlow is an API for gym check-ins and management. It provides features for gym discovery based on location, user check-in history, and administrative tools for validation.
+
+The platform implements business rules for proximity-based check-ins and time-restricted validations.
 
 ## Technologies
 
 - [Bun](https://bun.sh/) - JavaScript runtime and package manager
-- [Fastify](https://www.fastify.io/) - Fast and low overhead web framework
-- [Prisma](https://www.prisma.io/) - Next-generation Node.js and TypeScript ORM
-- [PostgreSQL](https://www.postgresql.org/) - Open source relational database
-- [OpenTelemetry](https://opentelemetry.io/) - Observability framework for cloud-native software
-- [Scalar](https://scalar.com/) - Modern interactive API documentation (Swagger/OpenAPI)
-- [Vitest](https://vitest.dev/) - Blazing fast unit and E2E testing framework
-- [Zod](https://zod.dev/) - TypeScript-first schema validation
-- [Docker](https://www.docker.com/) - Containerization for local development
+- [Fastify](https://www.fastify.io/) - Web framework
+- [Prisma](https://www.prisma.io/) - ORM for Node.js and TypeScript
+- [PostgreSQL](https://www.postgresql.org/) - Relational database
+- [OpenTelemetry](https://opentelemetry.io/) - Observability framework
+- [Scalar](https://scalar.com/) - API documentation interface
+- [Vitest](https://vitest.dev/) - Testing framework
+- [Zod](https://zod.dev/) - Schema validation
+- [Docker](https://www.docker.com/) - Containerization
 
 ## Features
 
@@ -92,6 +94,16 @@ The following scripts are available in the project:
 - `bun db:migrate`: Runs database migrations.
 - `bun db:generate`: Generates the Prisma client.
 - `bun db:studio`: Opens Prisma Studio to visualize your data.
+
+## CI/CD
+
+This project uses GitHub Actions to ensure code quality. A workflow is configured to run the E2E test suite automatically on every Pull Request targeting the `main` branch.
+
+The pipeline includes:
+- PostgreSQL service setup
+- Dependency installation with Bun
+- Database migration deployment
+- E2E test execution
 
 ## Documentation
 
