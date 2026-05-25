@@ -2,7 +2,7 @@ import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import apiReference from '@scalar/fastify-api-reference'
-import { fastify } from 'fastify'
+import { fastify, type FastifyError } from 'fastify'
 import {
   jsonSchemaTransform,
   serializerCompiler,
@@ -71,11 +71,18 @@ app.register(usersRoutes)
 app.register(gymsRoutes)
 app.register(checkInsRoutes)
 
-app.setErrorHandler((error, _, reply) => {
+app.setErrorHandler((error: FastifyError, _, reply) => {
   if (error instanceof ZodError) {
     return reply.status(400).send({
       message: 'Validation error',
       issues: z.treeifyError(error),
+    })
+  }
+
+  if (error.code === 'FST_ERR_VALIDATION') {
+    return reply.status(400).send({
+      message: 'Validation error',
+      issues: error.validation,
     })
   }
 
