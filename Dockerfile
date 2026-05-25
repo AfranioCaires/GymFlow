@@ -10,4 +10,4 @@ RUN DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy bun db:generate
 
 EXPOSE 3000
 
-CMD ["bun", "src/server.ts"]
+CMD ["sh", "-c", "bun db:migrate:deploy && bun src/server.ts"]
