@@ -13,7 +13,7 @@ describe('Gym Entity', () => {
     })
 
     expect(gym.id).toStrictEqual(expect.any(String))
-    expect(gym.title).toBe('JavaScript Gym')
+    expect(gym.title).toBe('RDR2')
     expect(gym.latitude).toBe(-27.2092052)
   })
 })

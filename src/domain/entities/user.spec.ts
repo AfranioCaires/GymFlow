@@ -12,7 +12,7 @@ describe('User Entity', () => {
     })
 
     expect(user.id).toStrictEqual(expect.any(String))
-    expect(user.name).toBe('John Doe')
+    expect(user.name).toBe('Arthur Morgan')
     expect(user.role).toBe('MEMBER')
     expect(user.createdAt).toBeInstanceOf(Date)
     expect(user.updatedAt).toBeInstanceOf(Date)
