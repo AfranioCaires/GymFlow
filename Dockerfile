@@ -6,7 +6,7 @@ RUN bun install --frozen-lockfile
 
 COPY . .
 
-RUN bun db:generate
+RUN DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy bun db:generate
 
 ENV NODE_ENV=production
 
